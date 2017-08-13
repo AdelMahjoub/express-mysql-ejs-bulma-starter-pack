@@ -13,9 +13,6 @@ router.use(bodyParser.json());
 router.route('/')
   .get((req, res, next) => {
     res.render('index');
-  })
-  .post((req, res, next) => {
-    next(err);
   });
 
 router.use(authRoutes);
