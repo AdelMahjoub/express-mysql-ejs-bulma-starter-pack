@@ -29,7 +29,7 @@ The templating engine used is [ejs](http://ejs.co/)
 
 **Usage:**
 
-Add a ***.env *** file at the root folder
+Add a ***.env*** file at the root folder
 ```
 SESS_SECRET=[secret phrase for the session]
 DB_USER=[database user]
