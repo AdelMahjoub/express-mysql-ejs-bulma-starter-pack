@@ -11,7 +11,7 @@ The styles are based on [bulma css](http://bulma.io/documentation/overview/start
 
 The templating engine used is [ejs](http://ejs.co/)
 
-**Users table: **
+**Users table:**
 ```
 +-------------+------------------+------+-----+-------------------+----------------+
 | Field       | Type             | Null | Key | Default           | Extra          |
@@ -27,7 +27,7 @@ The templating engine used is [ejs](http://ejs.co/)
 +-------------+------------------+------+-----+-------------------+----------------+
 ```
 
-** Usage: **
+**Usage:**
 
 Add a ***.env *** file at the root folder
 ```
