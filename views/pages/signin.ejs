@@ -1,0 +1,60 @@
+<% include ../inc/header %>
+<% include ../inc/navbar %>
+
+<!-- main content container -->
+<div class="main">
+  <div class="container">
+    <div class="section level">
+      <div class="level-item">
+        <div class="column is-8">
+          <!-- form validation notification errors -->
+          <% if(errors && errors.length > 0) { %>
+            <% errors.forEach(function(error) { %>
+              <%- Message.notify({ color: 'danger', message: error }) %>
+            <% }); %>
+          <% } %>
+          <!-- form validation notifications success -->
+          <% if(infos && infos.length > 0) { %>
+            <% infos.forEach(function(info) { %>
+              <%- Message.notify({ color: 'success', message: info }) %>
+            <% }); %>
+          <% } %>
+          <form action="/signin" method="POST">
+            <div class="field">
+              <%- Form.input({
+                name: 'email',
+                type: 'email',
+                icon: 'envelope',
+                label: 'Email',
+                placeholder: 'email'
+              }); %>
+              <%- Form.help(); %>
+            </div>
+            <div class="field">
+              <%- Form.input({
+                name: 'password',
+                type: 'password',
+                icon: 'key',
+                label: 'Password',
+                placeholder: 'password'
+              }); %>
+              <%- Form.help(); %>
+            </div>
+            <hr>
+            <div class="field">
+              <%- Form.submit({label: 'Sign in'}); %>
+              <%- Form.socialSignin({
+                url: '/auth/google',
+                color: 'danger',
+                provider: 'google',
+                label: 'Sign in with google'
+              }); %>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- end of main content container -->
+<script src="js/signin-form-validation.js"></script>
+<% include ../inc/footer %>

@@ -1,0 +1,100 @@
+<div class="container">
+  <!-- navigation bar -->
+  <nav class="navbar">
+    
+    <!-- left side of the navbar: always visible -->
+    <div class="navbar-brand">
+      <a href="/" class="navbar-item">
+        <h1 class="title is-4">Back Portal</h1>
+      </a>
+      <!-- burger icon: visible on touch devices: toggle the right side of the navbar ie navbar menu-->
+      <div class="navbar-burger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div><!-- end of burger icon -->
+    </div><!-- end of navbar left side-->
+
+    <!-- right side of the navbar ie navbar menu: hidden on touch devices -->
+    <div class="navbar-menu">
+      
+      <!-- left part of the navbar menu -->
+      <div class="navbar-start">
+
+        <!-- home link item -->
+        <a href="/" class="navbar-item">
+          <span>Home</span>
+        </a><!-- end of home link item -->
+        
+      </div><!-- end of left part -->
+
+      <!-- right part of the navbar menu -->
+      <div class="navbar-end">
+        
+        <!-- dashboard link -->                
+        <% if(authUser) { %>
+        <a href="/dashboard" class="navbar-item">          
+          <span>Dashboard</span>
+        </a><!-- end of dashboard link item -->
+        <% } %>
+        <!-- dropdown menu -->
+        <div class="navbar-item has-dropdown is-hoverable">
+          <!-- dropdown toggle -->
+          <a class="navbar-link is-active">
+            <span class="icon">
+              <i class="fa fa-user-circle"></i>
+            </span>
+          </a><!-- end of dropdown toggle -->
+
+          <!-- dropdown links -->
+          <div class="navbar-dropdown">
+            <% if(authUser) { %>
+            <a href="/profile" class="navbar-item">
+              <p class="field">
+                <span class="icon is-small">
+                  <i class="fa fa-cog"></i>
+                </span>
+                <span>
+                  profile
+                </span>
+              </p>
+            </a>
+            <hr class="navbar-divider">
+            <a href="/logout" class="navbar-item">
+              <p class="field">
+                <span class="icon is-small">
+                  <i class="fa fa-sign-out"></i>
+                </span>
+                <span>
+                  logout
+                </span>
+              </p>
+            </a>
+            <% } else { %>
+            <a href="/signup" class="navbar-item">
+              <p class="field">
+                <span class="icon is-small">
+                  <i class="fa fa-user-plus"></i>
+                </span>
+                <span> Signup</span>
+              </p>
+            </a>
+            <hr class="navbar-divider">
+            <a href="/signin" class="navbar-item">
+              <p class="field">
+                <span class="icon is-small">
+                  <i class="fa fa-sign-in"></i>
+                </span>
+                <span> Signin</span>
+              </p>
+            </a>
+            <% } %>
+          </div>
+        </div><!-- end of dropdown menu -->
+        
+      </div><!-- end of the right part -->
+
+    </div><!-- end of right side: navbar menu -->
+
+  </nav><!-- end of navigation bar -->
+</div>

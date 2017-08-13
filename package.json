@@ -1,0 +1,44 @@
+{
+  "name": "express-mysql-ejs-bulma-starter-pack",
+  "version": "1.0.0",
+  "description": "an express starter boilerplate with google Single Sign On and basic authentication strategies",
+  "main": "server.js",
+  "scripts": {
+    "start": "NODE_ENV=production forever server.js",
+    "dev": "NODE_ENV=development nodemon server.js",
+    "check": "nsp check",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["nodejs", "express", "mysql", "ejs", "bulma", "authentication", "SSO google", "passportjs"],
+  "author": "AdelMahjoub",
+  "license": "The Unlicense",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.17.2",
+    "compression": "^1.7.0",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "dotenv": "^4.0.0",
+    "ejs": "^2.5.7",
+    "express": "^4.15.4",
+    "express-minify": "^0.2.0",
+    "express-minify-html": "^0.11.4",
+    "express-mysql-session": "^1.2.2",
+    "express-session": "^1.15.5",
+    "forever": "^0.15.3",
+    "helmet": "^3.8.1",
+    "mysql": "^2.14.1",
+    "passport": "^0.3.2",
+    "passport-google-oauth": "^1.0.0",
+    "passport-local": "^1.0.0",
+    "shortid": "^2.2.8",
+    "validator": "^8.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.1",
+    "mocha": "^3.5.0",
+    "nodemon": "^1.11.0",
+    "nsp": "^2.7.0",
+    "supertest": "^3.0.0"
+  }
+}

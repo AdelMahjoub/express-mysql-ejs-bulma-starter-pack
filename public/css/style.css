@@ -1,0 +1,17 @@
+.navbar {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.main {
+  min-height: 1200px;
+}
+.help {
+  height: 20px;
+  font-size: 11px;
+}
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-thumb {
+   background-color: #798d8f;
+}
