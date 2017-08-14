@@ -27,6 +27,21 @@ The templating engine used is [ejs](http://ejs.co/)
 | isAdmin     | tinyint(1)       | NO   |     | 0                 |                |
 +-------------+------------------+------+-----+-------------------+----------------+
 
+CREATE TABLE Users (
+  id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  googleId varchar(255) DEFAULT NULL,
+  username varchar(255) NOT NULL,
+  email varchar(255) NOT NULL,
+  password varchar(255) NOT NULL,
+  signupDate timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  confirmed tinyint(1) NOT NULL DEFAULT 0,
+  displayName varchar(255) DEFAULT NULL,
+  isAdmin tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (id),
+  UNIQUE KEY unique_email (email),
+  FULLTEXT KEY idx_google_id (googleId)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8
+
 ```
 
 **Usage:**
