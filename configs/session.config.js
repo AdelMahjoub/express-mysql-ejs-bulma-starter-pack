@@ -14,7 +14,7 @@ const sessionConfig = {
     secure: process.env.NODE_ENV === 'production' ? true : false,
     maxAge: 86400000
   },
-  resave: true,
+  resave: false,
   saveUninitialized: false,
   store: sessionStore,
   proxy: process.env.NODE_ENV === 'production' ? true : false,

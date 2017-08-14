@@ -3,9 +3,8 @@ const passport = require('passport');
 
 const auth = express.Router();
 
-/**
- * Controllers
- */
+const AuthGuard = require('../class/AuthGuard');
+
 const signupController = require('../controllers/signup.controller');
 
 auth.route('/signup')
@@ -36,9 +35,11 @@ auth.get('/auth/google/callback', passport.authenticate('google', {
   failureFlash: 'Unexpected error, please try again'
 }));
 
-auth.get('/logout', (req, res, next) => {
+auth.get('/logout', AuthGuard.loginRequired, (req, res, next) => {
   req.logout();
-  res.redirect('/');
+  req.session.destroy(err => {
+    res.redirect('/');
+  });
 });
 
 module.exports = auth;

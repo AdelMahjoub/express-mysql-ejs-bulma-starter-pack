@@ -12,6 +12,7 @@ class UserSchema {
     this.email = props['email'] ? validator.escape(props['email']) : '';
     this.password = props['password'] || '';
     this.signupDate = props['signupDate'] || null;
+    this.isAdmin = props['isAdmin'] || false;
   }
   
   /**
