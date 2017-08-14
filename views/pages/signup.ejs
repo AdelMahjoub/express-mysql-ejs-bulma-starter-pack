@@ -1,6 +1,6 @@
 <% include ../inc/header %>
 <% include ../inc/navbar %>
-
+<script src='https://www.google.com/recaptcha/api.js'></script>
 <!-- main content container -->
 <div class="main">
   <div class="container">
@@ -26,7 +26,11 @@
                 type: 'text',
                 icon: 'user',
                 label: 'Username',
-                placeholder: 'username'
+                placeholder: 'username',
+                required: 'required',
+                autofocus: 'autofocus',
+                pattern: 'pattern=^[a-zA-Z0-9_-]{4,20}$',
+                title: 'title="Length between 4 and 20, with no special characters"'
               }); %>
               <%- Form.help(); %>
             </div>
@@ -36,7 +40,8 @@
                 type: 'email',
                 icon: 'envelope',
                 label: 'Email',
-                placeholder: 'email'
+                placeholder: 'email',
+                required: 'required'
               }); %>
               <%- Form.help(); %>
             </div>
@@ -46,7 +51,10 @@
                 type: 'password',
                 icon: 'key',
                 label: 'Password',
-                placeholder: 'password'
+                placeholder: 'password',
+                required: 'required',
+                pattern: 'pattern=(.){6,20}',
+                title: 'title="Length between 6 and 20 characters"'
               }); %>
               <%- Form.help(); %>
             </div>
@@ -56,19 +64,22 @@
                 type: 'password',
                 icon: 'key',
                 label: 'Confirm password',
-                placeholder: 'confirm password'
+                placeholder: 'confirm password',
+                required: 'required'
               }); %>
               <%- Form.help(); %>
             </div>
             <hr>
+            <%- Form.reCaptcha(reCaptchaPublic); %>
+            <hr>
             <div class="field">
-              <%- Form.submit({label: 'Sign up'}); %>
               <%- Form.socialSignin({
                 url: '/auth/google',
                 color: 'danger',
                 provider: 'google',
                 label: 'Sign in with google'
               }); %>
+              <%- Form.submit({label: 'Sign up'}); %>
             </div>
           </form>
         </div>
@@ -76,5 +87,4 @@
     </div>
   </div>
 </div><!-- end of main content container -->
-<script src="js/signup-form-validation.js"></script>
 <% include ../inc/footer %>

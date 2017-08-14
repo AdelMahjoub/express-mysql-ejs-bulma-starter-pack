@@ -1,6 +1,6 @@
 <% include ../inc/header %>
 <% include ../inc/navbar %>
-
+<script src='https://www.google.com/recaptcha/api.js'></script>
 <!-- main content container -->
 <div class="main">
   <div class="container">
@@ -26,7 +26,9 @@
                 type: 'email',
                 icon: 'envelope',
                 label: 'Email',
-                placeholder: 'email'
+                placeholder: 'email',
+                required: 'required',
+                autofocus: 'autofocus'
               }); %>
               <%- Form.help(); %>
             </div>
@@ -36,19 +38,22 @@
                 type: 'password',
                 icon: 'key',
                 label: 'Password',
-                placeholder: 'password'
+                placeholder: 'password',
+                required: 'required'
               }); %>
               <%- Form.help(); %>
             </div>
             <hr>
+            <%- Form.reCaptcha(reCaptchaPublic); %>
+            <hr>
             <div class="field">
-              <%- Form.submit({label: 'Sign in'}); %>
               <%- Form.socialSignin({
                 url: '/auth/google',
                 color: 'danger',
                 provider: 'google',
                 label: 'Sign in with google'
               }); %>
+              <%- Form.submit({label: 'Sign in'}); %>
             </div>
           </form>
         </div>
@@ -56,5 +61,4 @@
     </div>
   </div>
 </div><!-- end of main content container -->
-<script src="js/signin-form-validation.js"></script>
 <% include ../inc/footer %>

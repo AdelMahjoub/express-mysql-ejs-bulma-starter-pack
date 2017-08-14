@@ -3,7 +3,6 @@ window.addEventListener('DOMContentLoaded', function() {
   const navbarBurger = document.querySelector('.navbar-burger');
   const navbarMenu = document.querySelector('.navbar-menu');
   const notificationBtns = document.querySelectorAll('.delete');
-  const submitBtns = document.querySelectorAll('button[type="submit"]');
 
   function toggleNavbarMenu(e) {
     if(navbarBurger.classList.contains('is-active')) {
@@ -24,21 +23,11 @@ window.addEventListener('DOMContentLoaded', function() {
     notification.classList.add('is-hidden');
   }
 
-  function submittedFeedback(e) {
-    e.target.classList.add('is-loading');
-  }
-
   navbarBurger.addEventListener('click', toggleNavbarMenu, false);
 
   notificationBtns.forEach(btn => {
     if(btn) {
       btn.addEventListener('click', closeNotification, false);
-    }
-  });
-
-  submitBtns.forEach(btn => {
-    if(btn) {
-      btn.addEventListener('click', submittedFeedback, false);
     }
   });
   

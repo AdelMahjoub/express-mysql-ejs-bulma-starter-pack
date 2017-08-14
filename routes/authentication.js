@@ -11,7 +11,7 @@ auth.route('/signup')
   .get((req, res, next) => {
     res.render('signup');
   })
-  .post(signupController, passport.authenticate('local', {
+  .post(AuthGuard.reCaptcha, signupController, passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/signin',
     failureFlash: 'Invalid email or password',
@@ -21,13 +21,13 @@ auth.route('/signin')
   .get((req, res, next) => {
     res.render('signin');
   })
-  .post(passport.authenticate('local', {
+  .post(AuthGuard.reCaptcha, passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/signin',
     failureFlash: 'Invalid email or password',
   }));
 
-auth.get('/auth/google',passport.authenticate('google', {scope: ['profile', 'email']}));
+auth.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
 
 auth.get('/auth/google/callback', passport.authenticate('google', {
   successRedirect: '/',

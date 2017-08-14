@@ -1,7 +1,11 @@
 express-mysql-ejs-bulma-starter-pack
 ---------------------------------------
 ---------------------------------------
-An express starter boilerplate with a google Single Sign On and a basic authentication strategies.
+An express starter boilerplate with a google Single Sign On strategy and a basic authentication strategy.
+
+HTML and backend form validation.
+
+reCaptcha2 validation.  
 
 The authentication strategies are buit using [passportjs](http://passportjs.org/docs).
 
@@ -57,6 +61,8 @@ DB_NAME=[database name]
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 GOOGLE_AUTH_CALLBACK=
+RECAPTCHA_SECRET=
+RECAPTCHA_PUBLIC=
 ```
 Install the dependencies: `$ npm install`
 

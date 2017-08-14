@@ -50,42 +50,22 @@
           <div class="navbar-dropdown">
             <% if(authUser) { %>
             <a href="/profile" class="navbar-item">
-              <p class="field">
-                <span class="icon is-small">
-                  <i class="fa fa-cog"></i>
-                </span>
-                <span>
-                  profile
-                </span>
-              </p>
+              profile
             </a>
             <hr class="navbar-divider">
             <a href="/logout" class="navbar-item">
-              <p class="field">
-                <span class="icon is-small">
-                  <i class="fa fa-sign-out"></i>
-                </span>
-                <span>
-                  logout
-                </span>
-              </p>
+              logout
             </a>
             <% } else { %>
             <a href="/signup" class="navbar-item">
               <p class="field">
-                <span class="icon is-small">
-                  <i class="fa fa-user-plus"></i>
-                </span>
-                <span> Signup</span>
+                Signup
               </p>
             </a>
             <hr class="navbar-divider">
             <a href="/signin" class="navbar-item">
               <p class="field">
-                <span class="icon is-small">
-                  <i class="fa fa-sign-in"></i>
-                </span>
-                <span> Signin</span>
+                Signin
               </p>
             </a>
             <% } %>

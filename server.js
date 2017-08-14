@@ -40,6 +40,7 @@ app.use((req, res, next) => {
   app.locals.Message = require('./class/Message');
   app.locals.authUser = req.user;
   app.locals.title = 'back portal';
+  app.locals.reCaptchaPublic = process.env.RECAPTCHA_PUBLIC;
   app.locals.errors = req.flash('error');
   app.locals.infos = req.flash('info');
   next();
