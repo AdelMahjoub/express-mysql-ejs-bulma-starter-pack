@@ -1,4 +1,5 @@
 const User = require('../models/user.model.js');
+const dns = require('dns');
 
 module.exports = function(req, res, next) {
   // Form validation errors list
@@ -27,21 +28,30 @@ module.exports = function(req, res, next) {
     return res.redirect('/signup');
   }
 
-  // Try insert the Candidate user
-  User.insert(newUser)
-    .then(results => {
-      // Inserted the Candidate user
-      req.flash('info', 'Registred a new user');
-      next();
-    })
-    .catch(err => {
-      // Candidate user's email is already registred
-      if(err.includes('ER_DUP_ENTRY')) {
-        validationErrors.push('This email address is already registred');
-      } else {
-        validationErrors.push('Unexpected error, please try again');
-      }
-      req.flash('error', [... validationErrors]);
-      return res.redirect('/signup');
-    });
+  // Check if the email hostname exists
+  let emailHostname = newUser.email.split('@')[1];
+
+  dns.resolveMx(emailHostname, (err, records) => {
+    if(err || !records[0]) {
+      req.flash('error', [`${newUser.email} do not exists`]);
+      return res.redirect(req.url);
+    }
+    // Try insert the Candidate user
+    User.insert(newUser)
+      .then(results => {
+        // Inserted the Candidate user
+        req.flash('info', 'Registred a new user');
+        next();
+      })
+      .catch(err => {
+        // Candidate user's email is already registred
+        if(err.includes('ER_DUP_ENTRY')) {
+          validationErrors.push('This email address is already registred');
+        } else {
+          validationErrors.push('Unexpected error, please try again');
+        }
+        req.flash('error', [... validationErrors]);
+        return res.redirect('/signup');
+      });
+  });
 }
