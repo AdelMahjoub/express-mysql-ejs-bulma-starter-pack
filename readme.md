@@ -24,7 +24,9 @@ The templating engine used is [ejs](http://ejs.co/)
 | signupDate  | timestamp        | NO   |     | CURRENT_TIMESTAMP |                |
 | confirmed   | tinyint(1)       | NO   |     | 0                 |                |
 | displayName | varchar(255)     | YES  |     | NULL              |                |
+| isAdmin     | tinyint(1)       | NO   |     | 0                 |                |
 +-------------+------------------+------+-----+-------------------+----------------+
+
 ```
 
 **Usage:**
