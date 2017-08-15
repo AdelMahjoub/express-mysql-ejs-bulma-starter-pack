@@ -22,6 +22,7 @@ module.exports = function() {
           return done(null, user);
         })
         .catch(err => {
+          console.log(err);
           return done(err);
         });
     }  
@@ -36,6 +37,7 @@ module.exports = function() {
         done(null, user)
       })
       .catch(err => {
+        console.log(err);
         done(err, false);
       });
   });

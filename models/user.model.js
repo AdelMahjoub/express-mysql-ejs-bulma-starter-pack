@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const validator = require('validator');
 const bcrypt = require('bcrypt-nodejs');
+const shortid = require('shortid');
 
 // Database connection instance
 const connectionPool = require('../services/connectionPool.service');
@@ -124,13 +125,17 @@ class User extends UserSchema {
             if(err) {
               reject(err);
             }
-            let query = `INSERT INTO Users (googleId, username, email, password, displayName)
+            let confirmToken = shortid.generate();
+            let confirmed = user['googleId'] ? 1: 0;
+            let query = `INSERT INTO Users (googleId, username, email, password, displayName, confirmToken, confirmed)
             VALUES (
               ${connection.escape(user.googleId)},
               ${connection.escape(user.username)},
               ${connection.escape(user.email)},
               '${user.password}',
-              ${connection.escape(user.displayName)}
+              ${connection.escape(user.displayName)},
+              '${confirmToken}',
+              '${confirmed}'
             )`;
             connection.query(query, (err, results, fields) => {
               if(err) {
@@ -143,6 +148,28 @@ class User extends UserSchema {
         });
     });
   }
+
+  /**
+   * Confirm user
+   * @param {*} id 
+   */
+  static confirm(id) {
+    return new Promise((resolve, reject) => {
+      connectionPool.getConnection((err, connection) => {
+        if(err) {
+          reject(err);
+        }
+        let query = `UPDATE Users SET confirmed=1 WHERE id=${connection.escape(id)}`;
+        connection.query(query, (err, results, fields) => {
+          if(err) {
+            reject(err.message);
+          }
+          resolve(results);
+        })
+        connection.release();
+      })
+    })
+  } 
   
   /**
    * Update a user

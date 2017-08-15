@@ -1,5 +1,6 @@
 const https = require('https');
 const queryString = require('querystring');
+const User = require('../models/user.model');
 
 class AuthGuard {
   constructor(props){ }
@@ -58,12 +59,33 @@ class AuthGuard {
     });
 
     reCaptchaRequest.on('error', e => {
+      console.log(e);
       req.flash('error', ['Unexpected error, please try again']);
       return res.redirect(req.url);
     });
 
     reCaptchaRequest.write(postData);
     reCaptchaRequest.end();
+  }
+
+  static confirmRequired(req, res, next) {
+    let email = req.body['email'];
+    User.findByEmail({email})
+      .then(candidate => {
+        if(candidate && parseInt(candidate.confirmed, 10) === 1) {
+          return next();
+        } else {
+          req.flash('error', ['Account not yet confirmed, check your inbox for the activation token']);
+          return res.redirect('/confirm');
+        }
+        req.flash('error', ['In valid email or password']);
+        return res.redirect('/signin');
+      })
+      .catch(err => {
+        console.log(err);
+        req.flash('error', ['Unexpected error, please try again']);
+        return res.redirect('/signin')
+      })
   }
 }
 

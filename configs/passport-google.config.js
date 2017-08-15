@@ -1,6 +1,7 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const shortid = require('shortid');
+const mailer = require('../class/Mailer');
 
 const User = require('../models/user.model');
 const callbackUrl = process.env.NODE_ENV === 'production' ?
@@ -13,7 +14,7 @@ module.exports = function() {
       callbackURL: callbackUrl
     },
     function(accessToken, refreshToken, profile, done) {
-      // idd from the google profile
+      // id from the google profile
       let googleId = profile['id'];
 
       // Try find a user by google id
@@ -41,17 +42,27 @@ module.exports = function() {
             .then(results => {
               User.findByGoogleId(googleId)
                 .then(newUser => {
-                  return done(null, newUser);
+                  mailer.sendAccountActivatedMail(newUser)
+                    .then(info => {
+                      return done(null, newUser);
+                    })
+                    .catch(err => {
+                      console.log(err);
+                      return done(null, newUser);
+                    })
                 })
                 .catch(err => {
+                  console.log(err);
                   return done(err, false);
                 });
             })
             .catch(err => {
+              console.log(err);
               return done(err, false);
             });
         })
         .catch(err => {
+          console.log(err);
           return done(err, false);
         });      
     }

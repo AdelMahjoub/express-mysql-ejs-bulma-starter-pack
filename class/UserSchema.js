@@ -13,6 +13,8 @@ class UserSchema {
     this.password = props['password'] || '';
     this.signupDate = props['signupDate'] || null;
     this.isAdmin = props['isAdmin'] || false;
+    this.confirmToken = props['confirmToken'] || null;
+    this.confirmed = props['confirmed'] || false;
   }
   
   /**

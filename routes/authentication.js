@@ -6,6 +6,7 @@ const auth = express.Router();
 const AuthGuard = require('../class/AuthGuard');
 
 const signupController = require('../controllers/signup.controller');
+const confirmController = require('../controllers/confirm.controller');
 
 auth.route('/signup')
   .get((req, res, next) => {
@@ -21,11 +22,17 @@ auth.route('/signin')
   .get((req, res, next) => {
     res.render('signin');
   })
-  .post(AuthGuard.reCaptcha, passport.authenticate('local', {
+  .post(AuthGuard.reCaptcha, AuthGuard.confirmRequired, passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/signin',
     failureFlash: 'Invalid email or password',
   }));
+
+auth.route('/confirm')
+  .get((req, res, next) => {
+    res.render('confirm');
+  })
+  .post(AuthGuard.reCaptcha, confirmController);
 
 auth.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
 

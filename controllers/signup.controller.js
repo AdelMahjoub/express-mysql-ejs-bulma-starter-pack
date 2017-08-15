@@ -1,5 +1,6 @@
-const User = require('../models/user.model.js');
+const User = require('../models/user.model');
 const dns = require('dns');
+const mailer = require('../class/Mailer');
 
 module.exports = function(req, res, next) {
   // Form validation errors list
@@ -28,22 +29,40 @@ module.exports = function(req, res, next) {
     return res.redirect('/signup');
   }
 
-  // Check if the email hostname exists
+  // Check if the email hostname contains MX records
   let emailHostname = newUser.email.split('@')[1];
-
+  
   dns.resolveMx(emailHostname, (err, records) => {
     if(err || !records[0]) {
       req.flash('error', [`${newUser.email} do not exists`]);
-      return res.redirect(req.url);
+      return res.redirect('/signup');
     }
     // Try insert the Candidate user
     User.insert(newUser)
-      .then(results => {
-        // Inserted the Candidate user
-        req.flash('info', 'Registred a new user');
-        next();
+      .then(result => {
+        // Inserted 
+        User.findById(result.insertId)
+          .then(insertedUser => {
+            let hostname = process.env.NODE_ENV === 'production' ? req.hostname : 'localhost:3000';
+            mailer.sendVerificationMail(insertedUser, hostname)
+              .then(info => {
+                req.flash('info', 'Check your inbox for the verification token');
+                return res.redirect('/confirm');
+              })
+              .catch(err => {
+                console.log(err);
+                req.flash('error', ['Unexpected error, please try again']);
+                return res.redirect('/signup');
+              })
+          })
+          .catch(err => {
+            console.log(err);
+            req.flash('error', ['Unexpected error, please try again']);
+            return res.redirect('/signup');
+          })
       })
       .catch(err => {
+        console.log(err);
         // Candidate user's email is already registred
         if(err.includes('ER_DUP_ENTRY')) {
           validationErrors.push('This email address is already registred');

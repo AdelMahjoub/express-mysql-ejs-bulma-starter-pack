@@ -1,0 +1,58 @@
+<% include ../inc/header %>
+<% include ../inc/navbar %>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<!-- main content container -->
+<div class="main">
+  <div class="container">
+    <div class="section level">
+      <div class="level-item">
+        <div class="column is-8">
+          <!-- form validation notification errors -->
+          <% if(errors && errors.length > 0) { %>
+            <% errors.forEach(function(error) { %>
+              <%- Message.notify({ color: 'danger', message: error }) %>
+            <% }); %>
+          <% } %>
+          <!-- form validation notifications success -->
+          <% if(infos && infos.length > 0) { %>
+            <% infos.forEach(function(info) { %>
+              <%- Message.notify({ color: 'success', message: info }) %>
+            <% }); %>
+          <% } %>
+          <form action="/confirm" method="POST">
+             <div class="field">
+              <%- Form.input({
+                name: 'email',
+                type: 'email',
+                icon: 'envelope',
+                label: 'Email',
+                placeholder: 'email',
+                required: 'required',
+                autofocus: 'autofocus'
+              }); %>
+              <%- Form.help(); %>
+            </div>
+            <div class="field">
+              <%- Form.input({
+                name: 'confirmToken',
+                type: 'text',
+                icon: 'key',
+                label: 'Verification Token',
+                placeholder: 'verification token',
+                required: 'required',
+              }); %>
+              <%- Form.help(); %>
+            </div>
+            <hr>
+            <%- Form.reCaptcha(reCaptchaPublic); %>
+            <hr>
+            <div class="field">
+              <%- Form.submit({label: 'Confirm'}); %>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- end of main content container -->
+<% include ../inc/footer %>

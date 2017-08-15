@@ -22,6 +22,7 @@ router.use('*', (req, res, next) => {
 });
 
 router.use((err, req, res, next) => {
+  console.log(err);
   res.redirect('/');
 });
 
