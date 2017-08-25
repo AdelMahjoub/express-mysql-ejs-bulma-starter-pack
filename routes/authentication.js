@@ -5,6 +5,8 @@ const auth = express.Router();
 
 const AuthGuard = require('../class/AuthGuard');
 
+const User = require('../models/user.model');
+
 const signupController = require('../controllers/signup.controller');
 const confirmController = require('../controllers/confirm.controller');
 
@@ -22,7 +24,21 @@ auth.route('/signin')
   .get((req, res, next) => {
     res.render('signin');
   })
-  .post(AuthGuard.reCaptcha, AuthGuard.confirmRequired, passport.authenticate('local', {
+  .post(AuthGuard.reCaptcha, (req, res, next) => {
+    const email = req.body['email'] || '';
+    User.findByEmail({email})
+      .then(user => {
+        if(user && !user['confirmed']) {
+          return AuthGuard.confirmRequired(req, res, next);
+        } else {
+          return next();
+        }
+      })
+      .catch(err => {
+        req.flash('error', 'Unexpected error, please try again');
+        return res.redirect('/signin');
+      })
+  }, passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/signin',
     failureFlash: 'Invalid email or password',
