@@ -43,7 +43,7 @@ module.exports = function(req, res, next) {
         // Inserted 
         User.findById(result.insertId)
           .then(insertedUser => {
-            let hostname = process.env.NODE_ENV === 'production' ? req.hostname : 'localhost:3000';
+            let hostname = process.env.NODE_ENV === 'production' ? req.hostname : 'http://localhost:3000';
             mailer.sendVerificationMail(insertedUser, hostname)
               .then(info => {
                 req.flash('info', 'Check your inbox for the verification token');

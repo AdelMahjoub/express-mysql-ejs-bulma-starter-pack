@@ -1,22 +1,18 @@
 class Form {
   constructor(props) { }
-
-  /**
-   * 
-   * @param {*} props 
-   */
+  
   static input(props) {
-    const label = props['label'];
+    const label       = props['label'];
     const placeholder = props['placeholder'];
-    const name = props['name'];
-    const icon = props['icon'];
-    const type = props['type'];
-    const required = props['required'] || '';
-    const pattern = props['pattern'] || '';
-    const min = props['min'] || '';
-    const max = props['max'] || '';
-    const autofocus = props['autofocus'] || '';
-    const title = props['title'] || '';
+    const name        = props['name'];
+    const icon        = props['icon'];
+    const type        = props['type'];
+    const required    = props['required'] || '';
+    const pattern     = props['pattern'] || '';
+    const min         = props['min'] || '';
+    const max         = props['max'] || '';
+    const autofocus   = props['autofocus'] || '';
+    const title       = props['title'] || '';
     const html = `
       <label for="${name}" class="label">${label}</label>
         <div class="control has-icons-left has-icons-right">
@@ -40,17 +36,10 @@ class Form {
     return html;
   }
 
-  /**
-   * 
-   */
   static help() {
     return `<p class="help"></p>`
   }
 
-  /**
-   * 
-   * @param {*} props 
-   */
   static submit(props) {
     return `
       <div>
@@ -58,10 +47,6 @@ class Form {
       </div>`
   }
 
-  /**
-   * 
-   * @param {*} props 
-   */
   static socialSignin(props) {
     return `
       <div class="is-pulled-right">

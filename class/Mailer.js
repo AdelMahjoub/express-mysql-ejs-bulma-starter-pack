@@ -1,5 +1,7 @@
-const nodeMailer = require('nodemailer');
+const nodeMailer  = require('nodemailer');
 const queryString = require('querystring');
+const ejs         = require('ejs');
+const path        = require('path');
 
 class Mailer {
   constructor() {
@@ -18,48 +20,53 @@ class Mailer {
     return new Promise((resolve, reject) => {
 
       const url = `${hostname}/confirm`;
+      const templatePath = path.join(__dirname, '../', 'views', 'mails', 'verification-mail.ejs');
 
-      const options = {
-        from: process.env.APP_MAIL_USER,
-        to: user.email,
-        subject: `${require('../configs/common.config')['appName']} account verification`,
-        text: `
-          Confirmation token: ${user.confirmToken}
-          Confirmation link : ${url}`
-      }
-
-      this.transporter.sendMail(options, (err, info) => {
+      ejs.renderFile(templatePath , { confirmToken: user.confirmToken, link: url }, (err, data) => {
         if(err) {
+          console.log(err);
           reject(err);
         }
-        resolve(info);
+        const options = {
+          from: process.env.APP_MAIL_USER,
+          to: user.email,
+          subject: `${require('../configs/common.config')['appName']} account verification`,
+          html: data
+        }
+        this.transporter.sendMail(options, (err, info) => {
+          if(err) {
+            reject(err);
+          }
+          resolve(info);
+        });
       });
     });
   }
 
   sendAccountActivatedMail(user) {
     return new Promise((resolve, reject) => {
-      const query = queryString.stringify({
-        id: user.id,
-        token: user.confirmToken
-      });
-     
-      const options = {
-        from: process.env.APP_MAIL_USER,
-        to: user.email,
-        subject: `${require('../configs/common.config')['appName']} account activated`,
-        text: `
-        Your account has been activated with success.
-        Email address: ${user.email}
-        Username     : ${user.username}`
-      }
+      
+      const templatePath = path.join(__dirname, '../', 'views', 'mails', 'confirmation-mail.ejs');
 
-      this.transporter.sendMail(options, (err, info) => {
+      ejs.renderFile(templatePath, (err, data) => {
         if(err) {
+          console.log(err);
           reject(err);
         }
-        resolve(info);
-      });
+        const options = {
+          from: process.env.APP_MAIL_USER,
+          to: user.email,
+          subject: `${require('../configs/common.config')['appName']} account activated`,
+          html: data
+        }
+
+        this.transporter.sendMail(options, (err, info) => {
+          if(err) {
+            reject(err);
+          }
+          resolve(info);
+        });
+      })
     });
   }
 
